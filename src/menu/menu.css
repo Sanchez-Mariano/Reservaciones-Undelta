@@ -1,0 +1,193 @@
+body {
+  background: linear-gradient(to bottom right, #ebf4ff, #e0e7ff);
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1.5rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1e1b4b;
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  color: #4b5563;
+  font-size: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+/* 📱 MOBILE FIRST */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .header p {
+    font-size: 0.95rem;
+  }
+
+  .card {
+    padding: 1.2rem;
+  }
+}
+
+.card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.form input,
+.form select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.form label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 0.3rem;
+  color: #4f46e5;
+}
+
+.time-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* 📱 En móviles: startTime y endTime en vertical */
+@media (max-width: 500px) {
+  .time-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btn {
+  width: 100%;
+  background: #4f46e5;
+  color: white;
+  padding: 0.8rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: 0.2s;
+  border: none;
+  font-size: 1rem;
+}
+
+.btn:hover {
+  background: #4338ca;
+}
+
+.success {
+  margin-top: 1rem;
+  background: #ecfdf5;
+  border: 1px solid #d1fae5;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  color: #065f46;
+  font-weight: 500;
+}
+
+.empty {
+  text-align: center;
+  color: #9ca3af;
+  padding: 2rem;
+}
+
+.empty-icon {
+  width: 60px;
+  height: 60px;
+  opacity: 0.5;
+  margin: auto;
+  margin-bottom: 1rem;
+}
+
+.reservations {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.reservation {
+  border: 1px solid #e5e7eb;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  transition: 0.2s;
+}
+
+.reservation:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.reservation-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.reservation-header h3 {
+  font-weight: 600;
+  color: #111827;
+  margin-right: 0.5rem;
+}
+
+.reservation-header span {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.reservation-info p {
+  font-size: 0.9rem;
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
