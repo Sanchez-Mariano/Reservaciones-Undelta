@@ -15,16 +15,17 @@ function Menu() {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const areas = [
-    { id: 'Aula 1', name: 'Aula 1', capacity: '-' },
-    { id: 'Aula 2', name: 'Aula 2', capacity: '-' },
-    { id: 'Aula 3', name: 'Aula 3', capacity: '-' },
-    { id : 'Auditorio', name: 'Auditorio', capacity: '-' },
-    { id: 'Consejo Superior', name: 'Consejo Superior', capacity: '-' },
+    { id: 'Aula 1', name: 'Aula 1', capacity: 'capacidad ""' },
+    { id: 'Aula 2', name: 'Aula 2', capacity: 'capacidad ""' },
+    { id: 'Aula 3', name: 'Aula 3', capacity: 'capacidad ""' },
+    { id: 'Aula 4', name: 'Aula 4', capacity: 'capacidad ""' },
+    { id : 'Auditorio', name: 'Auditorio', capacity: 'capacidad ""' },
+    { id: 'Consejo Superior', name: 'Consejo Superior', capacity: 'capacidad ""' },
   ];
 
   const timeSlots = [
-    '08:00', '09:00', '10:00', '11:00', '12:00', 
-    '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'
+    '09:00', '10:00', '11:00', '12:00', 
+    '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00'
   ];
 
   const handleInputChange = (e) => {
@@ -82,18 +83,17 @@ function Menu() {
       <div className="grid">
         {/* Reservation Form */}
         <div className="card">
-          <h2>Hacer una Reservación</h2>
+          <h2>Hacer una reservación</h2>
           <form onSubmit={handleSubmit} className="form">
             <div>
               <label>
-                <User className="icon" /> Nombre Completo
+                <User className="icon" /> Nombre(s) y Apellido(s)
               </label>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                placeholder="Enter your full name"
               />
             </div>
 
