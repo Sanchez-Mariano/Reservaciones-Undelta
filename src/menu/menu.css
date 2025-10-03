@@ -76,6 +76,8 @@ body::before {
   box-sizing: border-box; 
   display: block;
   min-width: 0; 
+  background: rgba(255, 255, 255, 0.24);
+  transition: transform 0.3s ease, background 0.3s ease;
 }
 
 .time-grid > div {
@@ -184,7 +186,7 @@ body::before {
 }
 
 .reservation {
-  background-color: #f9f9f9;
+  background: #ffffff;
   border: 3px solid #003B55;
   padding: 1rem;
   border-radius: 0.5rem;
