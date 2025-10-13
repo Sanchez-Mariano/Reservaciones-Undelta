@@ -209,7 +209,6 @@ function Menu() {
 
       <div className="main-layout">
         {/* Search Sidebar */}
-        <aside className="search-sidebar">
           <div className="card sidebar-card">
             <h3 className="sidebar-title">Reservaciones</h3>
               {/* Google Calendar */}
@@ -232,7 +231,10 @@ function Menu() {
               ></iframe>
             </div>
           </div>
+
+          <aside className="search-sidebar">
           <div className="card sidebar-card">
+            <h3 className="sidebar-title">Buscar reservaciones</h3>
             <form onSubmit={handleSearch} className="form">
               <div>
                 <label>
@@ -246,7 +248,6 @@ function Menu() {
                   placeholder="Buscar por nombre..."
                 />
               </div>
-
               <div>
                 <label>
                   <MapPin className="icon" /> Área
