@@ -212,7 +212,7 @@ function Menu() {
         <aside className="search-sidebar">
           <div className="card sidebar-card">
             <h3 className="sidebar-title">Reservaciones</h3>
-                        {/* Google Calendar */}
+              {/* Google Calendar */}
             <div style={{ marginTop: '1.5rem' }}>
               <h4 style={{ marginBottom: '0.75rem', fontSize: '0.9rem', fontWeight: '600' }}>
                 Calendario de Reservaciones
@@ -223,13 +223,16 @@ function Menu() {
                   border: 'none',
                   borderRadius: '4px',
                   width: '100%',
-                  height: '400px'
+                  height: '400px',
+                  paddingBottom: '10px'
                 }}
                 frameBorder="0"
                 scrolling="no"
                 title="Google Calendar"
               ></iframe>
             </div>
+          </div>
+          <div className="card sidebar-card">
             <form onSubmit={handleSearch} className="form">
               <div>
                 <label>
