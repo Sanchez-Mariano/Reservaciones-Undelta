@@ -125,8 +125,7 @@ body::before {
 .room:hover,
 .room.hovered {
   transform: scale(1.08);
-  background: linear-gradient(135deg, #003B55 0%, #013b2b 100%);
-  box-shadow: 0 8px 20px rgba(1, 148, 211, 0.4);
+  background: linear-gradient(135deg, #003B55 0%, #002b1f 100%);
   z-index: 10;
 }
 
@@ -160,12 +159,11 @@ body::before {
   z-index: 100;
   pointer-events: none;
   white-space: nowrap;
-  animation: fadeIn 0.2s ease;
 }
 
 .room-tooltip strong {
   display: block;
-  color: #065f46;
+  color: #044432;
   margin-bottom: 0.25rem;
   font-size: 0.9rem;
 }
@@ -227,7 +225,7 @@ body::before {
   width: 16px;
   height: 16px;
   margin-right: 0.3rem;
-  color: #0ca177;
+  color: #0194d3;
 }
 
 /* Buttons */
