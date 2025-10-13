@@ -57,7 +57,7 @@ body::before {
 /* Main 3-column layout */
 .main-layout {
   display: grid;
-  grid-template-columns: 280px 1fr 320px;
+  grid-template-columns: 380px 1fr 320px;
   gap: 1.5rem;
   color: #ffffff;
   align-items: start;
@@ -70,9 +70,8 @@ body::before {
 }
 
 .sidebar-card {
-  max-height: calc(100vh - 3rem);
-  overflow-y: auto;
-  scrollbar-width: thin;
+  max-height: none;
+  overflow-y: visible;
 }
 
 .sidebar-title {
@@ -204,7 +203,6 @@ body::before {
   background: rgba(255, 255, 255, 0.35);
 }
 
-
 .time-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -285,24 +283,8 @@ body::before {
 /* Search results */
 .search-results {
   margin-top: 1rem;
-  max-height: 450px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #0194d3 rgba(255, 255, 255, 0.1);
-}
-
-.search-results::-webkit-scrollbar {
-  width: 6px;
-}
-
-.search-results::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-}
-
-.search-results::-webkit-scrollbar-thumb {
-  background: #0194d3;
-  border-radius: 10px;
+  max-height: none;
+  overflow-y: visible;
 }
 
 .empty {
@@ -380,6 +362,22 @@ body::before {
   height: 14px;
   margin-right: 0.4rem;
   color: #0194d3;
+}
+
+/* Form styling */
+.form input,
+.form select {
+  width: 100%;
+  max-width: 100%;    
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  box-sizing: border-box; 
+  display: block;
+  min-width: 0; 
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transform: translateY(-2px);
 }
 
 /* Responsive design */
@@ -465,165 +463,4 @@ body::before {
     font-size: 0.8rem;
     padding: 0.5rem 0.75rem;
   }
-
-}
-
-/* Form styling */
-.form input,
-.form select {
-  width: 100%;
-  max-width: 100%;    
-  padding: 0.6rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
-  font-size: 0.95rem;
-  box-sizing: border-box; 
-  display: block;
-  min-width: 0; 
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  transform: translateY(-2px);
-}
-
-.time-grid > div {
-  min-width: 0; 
-}
-
-.form label {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #0194d3;
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.4rem;
-  justify-content: flex-start;
-}
-
-
-.icon {
-  width: 16px;
-  height: 16px;
-  margin-right: 0.3rem;
-  color: #0ca177;
-}
-
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr; 
-  }
-
-  .header h1 {
-    font-size: 1.6rem;
-  }
-
-  .header p {
-    font-size: 0.9rem;
-  }
-
-  .card {
-    padding: 1rem;
-  }
-}
-
-.time-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-@media (max-width: 500px) {
-  .time-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* botones, success, reservas, etc. (sin cambios) */
-.btn {
-  width: 100%;
-  background: #003B55;
-  color: #f9f9f9;
-  padding: 0.8rem;
-  font-weight: 600;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
-  border: none;
-  font-size: 1rem;
-}
-
-.btn:hover {
-  background: #065f46;
-  transform: scale(1.02); 
-}
-
-/* ... resto igual ... */
-
-.success {
-  margin-top: 1rem;
-  background: #f9f9f9;
-  border: 1px solid #d1fae5;
-  padding: 0.8rem;
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  color: #065f46;
-  font-weight: 500;
-}
-
-.empty {
-  text-align: center;
-  color: #9ca3af;
-  padding: 2rem;
-}
-
-.empty-icon {
-  width: 60px;
-  height: 60px;
-  opacity: 0.5;
-  margin: auto;
-  margin-bottom: 1rem;
-}
-
-.reservations {
-  max-height: 400px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-}
-
-.reservation {
-  background: #ffffff;
-  border: 3px solid #003B55;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
-  transition: 0.2s;
-}
-
-.reservation:hover {
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.reservation-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
-  flex-wrap: wrap;
-  gap: 0.3rem;
-}
-
-.reservation-header h3 {
-  font-weight: 600;
-  color: #003B55;
-}
-
-.reservation-header span {
-  font-size: 0.8rem;
-  color: #6b7280;
-}
-
-.reservation-info p {
-  font-size: 0.9rem;
-  color: #4b5563;
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.3rem;
 }

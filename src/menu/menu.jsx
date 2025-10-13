@@ -211,7 +211,25 @@ function Menu() {
         {/* Search Sidebar */}
         <aside className="search-sidebar">
           <div className="card sidebar-card">
-            <h3 className="sidebar-title">Buscar Reservaciones</h3>
+            <h3 className="sidebar-title">Reservaciones</h3>
+                        {/* Google Calendar */}
+            <div style={{ marginTop: '1.5rem' }}>
+              <h4 style={{ marginBottom: '0.75rem', fontSize: '0.9rem', fontWeight: '600' }}>
+                Calendario de Reservaciones
+              </h4>
+              <iframe
+                src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FArgentina%2FBuenos_Aires&showPrint=0&src=bWFyaWFub2JlbnNhbmNoZXpAZ21haWwuY29t&src=ZmFtaWx5MTU2OTE0MjAyMDcyNTExNTIzOTlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=bmJhXy1tLTBqbTc0XyU0M2hpY2FnbyslNDJ1bGxzI3Nwb3J0c0Bncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&src=bmJhXy1tLTBqbWo3XyU0N29sZGVuKyU1M3RhdGUrJTU3YXJyaW9ycyNzcG9ydHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4uYXIjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&src=bmJhXy1tLTBqbWs3XyU0Y29zKyU0MW5nZWxlcyslNGNha2VycyNzcG9ydHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=bmJhXy1tLTBqbTN2XyU0ZWV3KyU1OW9yayslNGJuaWNrcyNzcG9ydHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039be5&color=%23009688&color=%23ad1457&color=%234285f4&color=%230b8043&color=%23ef6c00&color=%23d81b60"
+                style={{
+                  border: 'none',
+                  borderRadius: '4px',
+                  width: '100%',
+                  height: '400px'
+                }}
+                frameBorder="0"
+                scrolling="no"
+                title="Google Calendar"
+              ></iframe>
+            </div>
             <form onSubmit={handleSearch} className="form">
               <div>
                 <label>
@@ -222,7 +240,7 @@ function Menu() {
                   name="name"
                   value={searchParams.name}
                   onChange={handleSearchChange}
-                  placeholder="Buscar..."
+                  placeholder="Buscar por nombre..."
                 />
               </div>
 
@@ -235,7 +253,7 @@ function Menu() {
                   value={searchParams.area}
                   onChange={handleSearchChange}
                 >
-                  <option value="">Todas...</option>
+                  <option value="">Todas las áreas</option>
                   {areas.map(area => (
                     <option key={area.id} value={area.id}>
                       {area.name}
@@ -258,22 +276,21 @@ function Menu() {
 
               <div>
                 <label>
-                  <Clock className="icon" /> Hora
+                  <Clock className="icon" /> Hora de Inicio
                 </label>
                 <select
                   name="startTime"
                   value={searchParams.startTime}
                   onChange={handleSearchChange}
                 >
-                  <option value="">Todas...</option>
+                  <option value="">Todas las horas</option>
                   {timeSlots.map(time => (
                     <option key={time} value={time}>{time}</option>
                   ))}
                 </select>
               </div>
 
-              <button type="submit" className="btn btn-search" disabled={searching}>
-                <Search className="icon" style={{ marginRight: '0.5rem' }} />
+              <button type="submit" className="btn" disabled={searching}>
                 {searching ? 'Buscando...' : 'Buscar'}
               </button>
             </form>
