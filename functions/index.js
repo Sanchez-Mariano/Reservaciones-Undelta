@@ -5,20 +5,20 @@ const nodemailer = require('nodemailer');
 
 admin.initializeApp();
 
-// Configurar Nodemailer con tu servicio de email, usar AppPassword
+// Configurar Nodemailer con Gmail App Password
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: '', //email reservaciones@undelta.com
-    pass: '' // contraseña
+    user: process.env.GMAIL_USER || 'tu-email@gmail.com',
+    pass: process.env.GMAIL_PASSWORD || 'tu-app-password'
   }
 });
 
-exports.sendReservationEmail = functions.https.onCall(async (data, context) => {
+exports.sendReservationEmail = functions.https.onCall(async (data, _context) => {
   const { email, name, area, date, startTime, endTime, reservationId } = data;
 
   const mailOptions = {
-    from: 'Reservaciones UNDelta <tu-email@gmail.com>',
+    from: `Reservaciones UNDelta <${process.env.GMAIL_USER || 'tu-email@gmail.com'}>`,
     to: email,
     subject: '¡Gracias por tu reservación en UNDelta!',
     html: `
@@ -139,7 +139,6 @@ exports.sendReservationEmail = functions.https.onCall(async (data, context) => {
   try {
     await transporter.sendMail(mailOptions);
     
-    // También guardar un log en Firestore
     await admin.firestore().collection('email_logs').add({
       reservationId,
       email,
@@ -151,16 +150,14 @@ exports.sendReservationEmail = functions.https.onCall(async (data, context) => {
     return { success: true, message: 'Email enviado correctamente' };
   } catch (error) {
     console.error('Error enviando email:', error);
-    throw new functions.https.HttpsError('internal', 'Error al enviar el email');
+    throw new functions.https.HttpsError('internal', `Error al enviar el email: ${error.message}`);
   }
 });
 
-// Función adicional para confirmar reservaciones (opcional)
-exports.confirmReservation = functions.https.onCall(async (data, context) => {
+exports.confirmReservation = functions.https.onCall(async (data, _context) => {
   const { reservationId } = data;
 
   try {
-    // Actualizar el estado de la reservación
     const reservationRef = admin.firestore().collection('reservations').doc(reservationId);
     const reservation = await reservationRef.get();
     
@@ -175,9 +172,8 @@ exports.confirmReservation = functions.https.onCall(async (data, context) => {
 
     const reservationData = reservation.data();
 
-    // Enviar email de confirmación
     const confirmMailOptions = {
-      from: 'Reservaciones UNDelta <tu-email@gmail.com>',
+      from: `Reservaciones UNDelta <${process.env.GMAIL_USER || 'tu-email@gmail.com'}>`,
       to: reservationData.email,
       subject: '✅ Tu reservación ha sido CONFIRMADA',
       html: `
@@ -194,6 +190,6 @@ exports.confirmReservation = functions.https.onCall(async (data, context) => {
     return { success: true, message: 'Reservación confirmada y email enviado' };
   } catch (error) {
     console.error('Error confirmando reservación:', error);
-    throw new functions.https.HttpsError('internal', 'Error al confirmar la reservación');
+    throw new functions.https.HttpsError('internal', `Error al confirmar la reservación: ${error.message}`);
   }
 });

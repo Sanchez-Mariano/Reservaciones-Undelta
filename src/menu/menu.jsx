@@ -19,7 +19,6 @@ function Menu() {
     name: '',
     area: '',
     date: '',
-    startTime: ''
   });
   
   const [searchResults, setSearchResults] = useState([]);
@@ -118,60 +117,60 @@ function Menu() {
     }
   };
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    
-    if (!searchParams.name && !searchParams.area && !searchParams.date && !searchParams.startTime) {
-      alert('Por favor ingrese al menos un criterio de búsqueda');
-      return;
+const handleSearch = async (e) => {
+  e.preventDefault();
+  
+  if (!searchParams.name && !searchParams.area && !searchParams.date) {
+    alert('Por favor ingrese al menos un criterio de búsqueda');
+    return;
+  }
+
+  setSearching(true);
+
+  try {
+    const conditions = [];
+
+    // Construir condiciones sin startTime
+    if (searchParams.area) {
+      conditions.push(where('area', '==', searchParams.area));
+    }
+    if (searchParams.date) {
+      conditions.push(where('date', '==', searchParams.date));
     }
 
-    setSearching(true);
-
-    try {
-      let q = collection(db, 'reservations');
-      const conditions = [];
-
-      if (searchParams.area) {
-        conditions.push(where('area', '==', searchParams.area));
-      }
-      if (searchParams.date) {
-        conditions.push(where('date', '==', searchParams.date));
-      }
-      if (searchParams.startTime) {
-        conditions.push(where('startTime', '==', searchParams.startTime));
-      }
-
-      if (conditions.length > 0) {
-        q = query(collection(db, 'reservations'), ...conditions, orderBy('timestamp', 'desc'));
-      } else {
-        q = query(collection(db, 'reservations'), orderBy('timestamp', 'desc'));
-      }
-
-      const querySnapshot = await getDocs(q);
-      let results = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-
-      if (searchParams.name) {
-        results = results.filter(r => 
-          r.name.toLowerCase().includes(searchParams.name.toLowerCase())
-        );
-      }
-
-      setSearchResults(results);
-
-      if (results.length === 0) {
-        alert('No se encontraron reservaciones con esos criterios');
-      }
-    } catch (error) {
-      console.error('Error al buscar:', error);
-      alert('Error al buscar reservaciones: ' + error.message);
-    } finally {
-      setSearching(false);
+    // Crear la consulta
+    let q;
+    if (conditions.length > 0) {
+      q = query(collection(db, 'reservations'), ...conditions, orderBy('timestamp', 'desc'));
+    } else {
+      q = query(collection(db, 'reservations'), orderBy('timestamp', 'desc'));
     }
-  };
+
+    const querySnapshot = await getDocs(q);
+    let results = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    // Filtrar por nombre en el cliente
+    if (searchParams.name) {
+      results = results.filter(r => 
+        r.name.toLowerCase().includes(searchParams.name.toLowerCase())
+      );
+    }
+
+    setSearchResults(results);
+
+    if (results.length === 0) {
+      alert('No se encontraron reservaciones con esos criterios');
+    }
+  } catch (error) {
+    console.error('Error al buscar:', error);
+    alert('Error al buscar reservaciones: ' + error.message);
+  } finally {
+    setSearching(false);
+  }
+};
 
   const getAreaName = (areaId) => {
     return areas.find(a => a.id === areaId)?.name || areaId;
@@ -276,22 +275,6 @@ function Menu() {
                   value={searchParams.date}
                   onChange={handleSearchChange}
                 />
-              </div>
-
-              <div>
-                <label>
-                  <Clock className="icon" /> Hora de Inicio
-                </label>
-                <select
-                  name="startTime"
-                  value={searchParams.startTime}
-                  onChange={handleSearchChange}
-                >
-                  <option value="">Todas las horas</option>
-                  {timeSlots.map(time => (
-                    <option key={time} value={time}>{time}</option>
-                  ))}
-                </select>
               </div>
 
               <button type="submit" className="btn" disabled={searching}>
