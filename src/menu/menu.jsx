@@ -200,21 +200,20 @@ function Menu() {
             <h4 style={{ marginBottom: '0.75rem', fontSize: '0.9rem', fontWeight: '600' }}>
               Calendario de Reservaciones
             </h4>
-            <iframe
-              src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FArgentina%2FBuenos_Aires&showPrint=0&src=bWFyaWFub2JlbnNhbmNoZXpAZ21haWwuY29t&src=ZmFtaWx5MTU2OTE0MjAyMDcyNTExNTIzOTlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=bmJhXy1tLTBqbTc0XyU0M2hpY2FnbyslNDJ1bGxzI3Nwb3J0c0Bncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&src=bmJhXy1tLTBqbWo3XyU0N29sZGVuKyU1M3RhdGUrJTU3YXJyaW9ycyNzcG9ydHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4uYXIjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&src=bmJhXy1tLTBqbWs3XyU0Y29zKyU0MW5nZWxlcyslNGNha2VycyNzcG9ydHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=bmJhXy1tLTBqbTN2XyU0ZWV3KyU1OW9yayslNGJuaWNrcyNzcG9ydHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039be5&color=%23009688&color=%23ad1457&color=%234285f4&color=%230b8043&color=%23ef6c00&color=%23d81b60"
-              style={{
-                border: 'none',
-                borderRadius: '4px',
-                width: '100%',
-                height: '400px',
-                paddingBottom: '10px'
-              }}
-              frameBorder="0"
-              scrolling="no"
-              title="Google Calendar"
-            ></iframe>
-          </div>
+            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FArgentina%2FBuenos_Aires&showPrint=0&showTz=0&hl=es_419&src=bWFyaWFub2JlbnNhbmNoZXpAZ21haWwuY29t&src=ZW4uYXIjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5&color=%230b8043"
+            style={{
+              border: 'none',
+              borderRadius: '4px',
+              width: '100%',
+              height: '400px',
+              paddingBottom: '10px'
+            }}
+            frameBorder="0"
+            title="Google Calendar"
+          ></iframe>
         </div>
+        </div>
+
 
         {/* Search Sidebar */}
         <aside className="search-sidebar">
