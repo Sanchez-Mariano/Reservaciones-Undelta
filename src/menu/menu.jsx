@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Calendar, Clock, User, MapPin, CheckCircle, Mail, Search } from 'lucide-react';
 import { collection, addDoc, query, where, getDocs, orderBy } from 'firebase/firestore';
-import { db, functions } from './firebaseConfig';
-import { httpsCallable } from 'firebase/functions';
+import { db } from './firebaseConfig';
 import './menu.css';
 
 function Menu() {
@@ -18,7 +17,7 @@ function Menu() {
   const [searchParams, setSearchParams] = useState({
     name: '',
     area: '',
-    date: '',
+    date: ''
   });
   
   const [searchResults, setSearchResults] = useState([]);
@@ -79,22 +78,12 @@ function Menu() {
     setLoading(true);
 
     try {
-      const docRef = await addDoc(collection(db, 'reservations'), {
+      // Guardar la reservación en Firestore
+      await addDoc(collection(db, 'reservations'), {
         ...formData,
         status: 'pendiente',
         timestamp: new Date(),
         createdAt: new Date().toISOString()
-      });
-
-      const sendEmail = httpsCallable(functions, 'sendReservationEmail');
-      await sendEmail({
-        email: formData.email,
-        name: formData.name,
-        area: formData.area,
-        date: formData.date,
-        startTime: formData.startTime,
-        endTime: formData.endTime,
-        reservationId: docRef.id
       });
 
       setShowSuccess(true);
@@ -108,7 +97,7 @@ function Menu() {
         endTime: ''
       });
 
-      setTimeout(() => setShowSuccess(false), 3000);
+      setTimeout(() => setShowSuccess(false), 5000);
     } catch (error) {
       console.error('Error:', error);
       alert('Error al crear la reservación: ' + error.message);
@@ -117,60 +106,57 @@ function Menu() {
     }
   };
 
-const handleSearch = async (e) => {
-  e.preventDefault();
-  
-  if (!searchParams.name && !searchParams.area && !searchParams.date) {
-    alert('Por favor ingrese al menos un criterio de búsqueda');
-    return;
-  }
-
-  setSearching(true);
-
-  try {
-    const conditions = [];
-
-    // Construir condiciones sin startTime
-    if (searchParams.area) {
-      conditions.push(where('area', '==', searchParams.area));
-    }
-    if (searchParams.date) {
-      conditions.push(where('date', '==', searchParams.date));
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    
+    if (!searchParams.name && !searchParams.area && !searchParams.date) {
+      alert('Por favor ingrese al menos un criterio de búsqueda');
+      return;
     }
 
-    // Crear la consulta
-    let q;
-    if (conditions.length > 0) {
-      q = query(collection(db, 'reservations'), ...conditions, orderBy('timestamp', 'desc'));
-    } else {
-      q = query(collection(db, 'reservations'), orderBy('timestamp', 'desc'));
+    setSearching(true);
+
+    try {
+      const conditions = [];
+
+      if (searchParams.area) {
+        conditions.push(where('area', '==', searchParams.area));
+      }
+      if (searchParams.date) {
+        conditions.push(where('date', '==', searchParams.date));
+      }
+
+      let q;
+      if (conditions.length > 0) {
+        q = query(collection(db, 'reservations'), ...conditions, orderBy('timestamp', 'desc'));
+      } else {
+        q = query(collection(db, 'reservations'), orderBy('timestamp', 'desc'));
+      }
+
+      const querySnapshot = await getDocs(q);
+      let results = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      if (searchParams.name) {
+        results = results.filter(r => 
+          r.name.toLowerCase().includes(searchParams.name.toLowerCase())
+        );
+      }
+
+      setSearchResults(results);
+
+      if (results.length === 0) {
+        alert('No se encontraron reservaciones con esos criterios');
+      }
+    } catch (error) {
+      console.error('Error al buscar:', error);
+      alert('Error al buscar reservaciones: ' + error.message);
+    } finally {
+      setSearching(false);
     }
-
-    const querySnapshot = await getDocs(q);
-    let results = querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
-
-    // Filtrar por nombre en el cliente
-    if (searchParams.name) {
-      results = results.filter(r => 
-        r.name.toLowerCase().includes(searchParams.name.toLowerCase())
-      );
-    }
-
-    setSearchResults(results);
-
-    if (results.length === 0) {
-      alert('No se encontraron reservaciones con esos criterios');
-    }
-  } catch (error) {
-    console.error('Error al buscar:', error);
-    alert('Error al buscar reservaciones: ' + error.message);
-  } finally {
-    setSearching(false);
-  }
-};
+  };
 
   const getAreaName = (areaId) => {
     return areas.find(a => a.id === areaId)?.name || areaId;
@@ -207,31 +193,31 @@ const handleSearch = async (e) => {
       </div>
 
       <div className="main-layout">
-        {/* Search Sidebar */}
-          <div className="card sidebar-card">
-            <h3 className="sidebar-title">Reservaciones</h3>
-              {/* Google Calendar */}
-            <div style={{ marginTop: '1.5rem' }}>
-              <h4 style={{ marginBottom: '0.75rem', fontSize: '0.9rem', fontWeight: '600' }}>
-                Calendario de Reservaciones
-              </h4>
-              <iframe
-                src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FArgentina%2FBuenos_Aires&showPrint=0&src=bWFyaWFub2JlbnNhbmNoZXpAZ21haWwuY29t&src=ZmFtaWx5MTU2OTE0MjAyMDcyNTExNTIzOTlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=bmJhXy1tLTBqbTc0XyU0M2hpY2FnbyslNDJ1bGxzI3Nwb3J0c0Bncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&src=bmJhXy1tLTBqbWo3XyU0N29sZGVuKyU1M3RhdGUrJTU3YXJyaW9ycyNzcG9ydHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4uYXIjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&src=bmJhXy1tLTBqbWs3XyU0Y29zKyU0MW5nZWxlcyslNGNha2VycyNzcG9ydHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=bmJhXy1tLTBqbTN2XyU0ZWV3KyU1OW9yayslNGJuaWNrcyNzcG9ydHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039be5&color=%23009688&color=%23ad1457&color=%234285f4&color=%230b8043&color=%23ef6c00&color=%23d81b60"
-                style={{
-                  border: 'none',
-                  borderRadius: '4px',
-                  width: '100%',
-                  height: '400px',
-                  paddingBottom: '10px'
-                }}
-                frameBorder="0"
-                scrolling="no"
-                title="Google Calendar"
-              ></iframe>
-            </div>
+        {/* Google Calendar */}
+        <div className="card sidebar-card">
+          <h3 className="sidebar-title">Reservaciones</h3>
+          <div style={{ marginTop: '1.5rem' }}>
+            <h4 style={{ marginBottom: '0.75rem', fontSize: '0.9rem', fontWeight: '600' }}>
+              Calendario de Reservaciones
+            </h4>
+            <iframe
+              src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FArgentina%2FBuenos_Aires&showPrint=0&src=bWFyaWFub2JlbnNhbmNoZXpAZ21haWwuY29t&src=ZmFtaWx5MTU2OTE0MjAyMDcyNTExNTIzOTlAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&src=bmJhXy1tLTBqbTc0XyU0M2hpY2FnbyslNDJ1bGxzI3Nwb3J0c0Bncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&src=bmJhXy1tLTBqbWo3XyU0N29sZGVuKyU1M3RhdGUrJTU3YXJyaW9ycyNzcG9ydHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4uYXIjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&src=bmJhXy1tLTBqbWs3XyU0Y29zKyU0MW5nZWxlcyslNGNha2VycyNzcG9ydHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=bmJhXy1tLTBqbTN2XyU0ZWV3KyU1OW9yayslNGJuaWNrcyNzcG9ydHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039be5&color=%23009688&color=%23ad1457&color=%234285f4&color=%230b8043&color=%23ef6c00&color=%23d81b60"
+              style={{
+                border: 'none',
+                borderRadius: '4px',
+                width: '100%',
+                height: '400px',
+                paddingBottom: '10px'
+              }}
+              frameBorder="0"
+              scrolling="no"
+              title="Google Calendar"
+            ></iframe>
           </div>
+        </div>
 
-          <aside className="search-sidebar">
+        {/* Search Sidebar */}
+        <aside className="search-sidebar">
           <div className="card sidebar-card">
             <h3 className="sidebar-title">Buscar reservaciones</h3>
             <form onSubmit={handleSearch} className="form">
@@ -413,7 +399,7 @@ const handleSearch = async (e) => {
             {showSuccess && (
               <div className="success">
                 <CheckCircle className="icon" />
-                <span>¡Reservación enviada! Revisa tu email.</span>
+                <span>¡Reservación creada exitosamente! Puedes buscarla en el buscador.</span>
               </div>
             )}
           </div>
