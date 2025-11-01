@@ -125,7 +125,7 @@ body::before {
 .room:hover,
 .room.hovered {
   transform: scale(1.08);
-  background: rgba(6, 95, 70, 0.719);
+  background: rgb(6, 95, 70);
   z-index: 10;
 }
 
