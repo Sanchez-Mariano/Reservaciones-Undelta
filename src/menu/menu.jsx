@@ -200,7 +200,7 @@ function Menu() {
             <h4 style={{ marginBottom: '0.75rem', fontSize: '0.9rem', fontWeight: '600' }}>
               Calendario de Reservaciones
             </h4>
-            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FArgentina%2FBuenos_Aires&showPrint=0&showTz=0&hl=es_419&src=bWFyaWFub2JlbnNhbmNoZXpAZ21haWwuY29t&src=ZW4uYXIjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5&color=%230b8043"
+            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FArgentina%2FBuenos_Aires&showPrint=0&src=aW5mb3JtYXRpY2FAdW5kZWx0YS5lZHUuYXI&src=Y180OGUwMmQyYzFlZmI0YzA4OTAzN2FiNjkzYTcyODUxZjliN2Y4YzkzZmRkZGJlYmZkNDg2YzYwM2JiMjRiZWU1QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&src=ZXMtNDE5LmFyI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039be5&color=%23c0ca33&color=%230b8043"
             style={{
               border: 'none',
               borderRadius: '4px',
