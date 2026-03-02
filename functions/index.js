@@ -9,7 +9,7 @@ admin.initializeApp();
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.GMAIL_USER || 'tu-email@gmail.com',
+    user: process.env.GMAIL_USER || 'informatica@undelta.edu.ar',
     pass: process.env.GMAIL_PASSWORD || 'tu-app-password'
   }
 });
@@ -18,7 +18,7 @@ exports.sendReservationEmail = functions.https.onCall(async (data, _context) => 
   const { email, name, area, date, startTime, endTime, reservationId } = data;
 
   const mailOptions = {
-    from: `Reservaciones UNDelta <${process.env.GMAIL_USER || 'tu-email@gmail.com'}>`,
+    from: `Reservaciones UNDelta <${process.env.GMAIL_USER || 'informatica@undelta.edu.ar'}>`,
     to: email,
     subject: '¡Gracias por tu reservación en UNDelta!',
     html: `
@@ -173,7 +173,7 @@ exports.confirmReservation = functions.https.onCall(async (data, _context) => {
     const reservationData = reservation.data();
 
     const confirmMailOptions = {
-      from: `Reservaciones UNDelta <${process.env.GMAIL_USER || 'tu-email@gmail.com'}>`,
+      from: `Reservaciones UNDelta <${process.env.GMAIL_USER || 'informatica@undelta.edu.ar'}>`,
       to: reservationData.email,
       subject: '✅ Tu reservación ha sido CONFIRMADA',
       html: `
